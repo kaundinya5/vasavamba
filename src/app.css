@@ -1,0 +1,179 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+.accordion {
+  margin-top: 6rem;
+  font-size: 20px;
+  width: 100%;
+}
+
+.App {
+  display: flex;
+  height: 100vh;
+}
+
+.holder {
+  list-style: none;
+  width: 90%;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.question {
+  background: #00d7825c;
+  padding: 1rem;
+  box-shadow: -1px -1px 3px 0px #1a1a1a4f;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+.answer {
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+  transform: translateY(-11%);
+  opacity: 0.7;
+  padding: 0 0.6rem;
+  background: whitesmoke;
+  font-weight: 200;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.answer.open {
+  opacity: 1;
+  padding: 1rem;
+  transform: translateY(0);
+  cursor: pointer;
+}
+
+
+.finallist {
+  list-style-type: decimal;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+
+.closeButton {
+  background-color: yellow;
+  color: rgba(0, 0, 0, 0.0);
+}
+
+.closeInputs {
+  margin-top: 6rem;
+  font-size: 20px;
+  width: 50%;
+  float: left;
+  height: 80vh;
+  flex-basis: 100%;
+  display: none;
+}
+
+.openInputs {
+  margin-top: 6rem;
+  font-size: 20px;
+  width: 50%;
+  float: left;
+  height: 80vh;
+  flex-basis: 100%;
+}
+
+.wideOutputs {
+  margin-top: 6rem;
+  font-size: 20px;
+  width: 50%;
+  float: left;
+  flex-basis: 100%;
+  height: 80vh;
+  overflow: auto;
+}
+
+.wideOutputs ul div li {
+  width: 70%;
+  float: left;
+  font-size: 20px;
+}
+
+.wideOutputs ul div input {
+  margin-left: 10px;
+  width: 20%;
+  height: 2rem;
+  float: left;
+  font-size: 18px;
+}
+
+.wideOutputs ul div p {
+  margin-left: 10px;
+  /* width: 20%; */
+  height: 2rem;
+  float: left;
+  font-size: 18px;
+}
+
+.narrowOutputs {
+  margin-top: 6rem;
+  font-size: 20px;
+  width: 50%;
+  float: left;
+  flex-basis: 100%;
+  height: 80vh;
+  overflow: auto;
+}
+
+.narrowOutputs ul div li {
+  width: 70%;
+  float: left;
+  font-size: 20px;
+}
+
+.narrowOutputs ul div input {
+  margin-left: 10px;
+  width: 20%;
+  height: 2rem;
+  float: left;
+  font-size: 18px;
+}
+
+.narrowOutputs ul div p {
+  margin-left: 10px;
+  /* width: 20%; */
+  height: 2rem;
+  float: left;
+  font-size: 18px;
+}
+
+.FinalOpen ul div li {
+  width: 30%;
+  float: left;
+  font-size: 20px;
+}
+
+.FinalOpen ul div input {
+  margin-left: 10px;
+  width: 20%;
+  height: 2rem;
+  float: left;
+  font-size: 18px;
+}
+
+.FinalOpen ul div p {
+  margin-left: 10px;
+  /* width: 20%; */
+  height: 2rem;
+  float: left;
+  font-size: 18px;
+}
+
+.FinalClose {
+  margin-top: 6rem;
+  font-size: 20px;
+  width: 50%;
+  float: left;
+  height: 80vh;
+  flex-basis: 100%;
+  display: none;
+}
