@@ -1,16 +1,14 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
-import "../styles/monitor.css";
+import "../styles/main.css";
 
 class Header extends Component {
   render() {
     return (
       <React.Fragment>
         <div className="navBg navText">
-          <h6 className="text-center pt-3  fs-large">
-            Monitoring Intelligence: Executive Dashboard
-          </h6>
+          <h6 className="text-center pt-3  fs-large">Vasavamba Stores</h6>
           <Nav
             variant="pills"
             className="justify-content-center custom-pills font-weight-normal"
@@ -22,28 +20,12 @@ class Header extends Component {
                 to="/"
                 className="nav-link"
               >
-                MONITOR
+                Create List
               </NavLink>
             </Nav.Item>
             <Nav.Item>
-              <NavLink to="/analyze" className="nav-link">
-                ANALYZE
-              </NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/assess" className="nav-link">
-                ASSESS
-              </NavLink>
-            </Nav.Item>
-
-            <Nav.Item>
-              <NavLink to="/map" className="nav-link">
-                MAP
-              </NavLink>
-            </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/orchestrate" className="nav-link">
-                ORCHESTRATE
+              <NavLink to="/addItems" className="nav-link">
+                Add Items
               </NavLink>
             </Nav.Item>
           </Nav>

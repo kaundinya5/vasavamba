@@ -3,7 +3,9 @@ import "./app.css";
 import Accordion from "./inputList";
 import AddedList from "./outputList";
 // import FinalList from "./outputList"
-
+import SideBar from "./components/sideBar";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -35,34 +37,14 @@ class App extends React.Component {
   render() {
     const { handleClick } = this;
     return (
-      <div>
-        <button className="closeButton" onClick={this.closeInput}>
-          {" "}
-          Close{" "}
-        </button>
-        <div className={this.state.isInputClosed ? "FinalOpen" : "FinalClose"}>
-          <ul>
-            {this.state.addedElements.map((item, idx) => (
-              <div key={idx}>
-                <li>{<p>{item}</p>}</li>
-                <input />
-                <p> {this.state.units[idx]} </p>
-              </div>
-            ))}
-          </ul>
-        </div>
-        <div className="App">
-          <Accordion
-            handleClick={handleClick}
-            closed={this.state.isInputClosed}
-          />
-          <AddedList
-            elements={this.state.addedElements}
-            units={this.state.units}
-            closed={this.state.isInputClosed}
-          />
-        </div>
-      </div>
+      <Row>
+        <Col xs lg md="4">
+          <SideBar />
+        </Col>
+        <Col xs lg md="8">
+          Testing
+        </Col>
+      </Row>
     );
   }
 }

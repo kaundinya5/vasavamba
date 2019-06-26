@@ -7,7 +7,7 @@ class Main extends Component {
     return (
       <React.Fragment>
         <Header />
-        {/* <Route exact path="/app" component={App} /> */}
+        <Route exact path="/" component={App} />
       </React.Fragment>
     );
   }
