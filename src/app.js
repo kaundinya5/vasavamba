@@ -37,7 +37,7 @@ class App extends React.Component {
   render() {
     const { handleClick } = this;
     return (
-      <Row>
+      <Row className="h-100">
         <Col xs lg md="4">
           <SideBar />
         </Col>
