@@ -38,11 +38,10 @@ class App extends React.Component {
     const { handleClick } = this;
     return (
       <Row className="h-100">
-        <Col xs lg md="4">
+        <Col md="2">
           <SideBar />
         </Col>
-        <Col xs lg md="8">
-          Testing
+        <Col md="10">
         </Col>
       </Row>
     );

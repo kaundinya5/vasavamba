@@ -20,7 +20,7 @@ class Header extends Component {
                 to="/"
                 className="nav-link"
               >
-                Create List
+                Home
               </NavLink>
             </Nav.Item>
             <Nav.Item>

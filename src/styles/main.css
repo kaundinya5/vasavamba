@@ -1,18 +1,18 @@
 .navBg {
-  background: #ffe668;
+  background: #343a40;
   position: relative;
 }
 .navText,
 .navText a {
-  color: black;
+  color: #F5F5F5;
 }
 .custom-pills .nav-item a {
   border-radius: 0.25rem 0.25rem 0 0 !important ;
 }
 .custom-pills .nav-item a.active {
-  color: #332f3a;
-  border-bottom: 5px solid #332f3a !important;
-  background: #fee668;
+  color: #F5F5F5;
+  border-bottom: 5px solid #F5F5F5 !important;
+  background: #343a40;
 }
 .graph-titles {
   background: #312f3a;
