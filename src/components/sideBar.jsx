@@ -1,20 +1,18 @@
 import React, { Component } from "react";
-import "../styles/sideBar.css"
-import Accordion from "react-bootstrap/Accordion"
-import Card from "react-bootstrap/Card"
-import ButtonGroup from "react-bootstrap/ButtonGroup"
-import Button from "react-bootstrap/Button"
+import "../styles/sideBar.css";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Button from "react-bootstrap/Button";
+import { connect } from "react-redux";
+import { fetchClickedItem } from "../actions/fetchClickedItem";
 class SideBar extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      addedElements: []
-    };
   }
-  componentDidUpdate() {
-    console.log(this.state)
-  }
+  handleClick = item => {
+    this.props.fetchClickedItem(item);
+  };
   render() {
     return (
       <div className="grey h-100">
@@ -39,10 +37,12 @@ class SideBar extends Component {
             <Accordion.Collapse eventKey="1">
               <Card.Body>
                 <ButtonGroup vertical>
-                  <Button onClick={() => this.setState({
-                    addedElements: [...this.state.addedElements, "5-star"]
-                  })}>5 Star</Button>
-                  <Button>Snickers</Button>
+                  <Button onClick={() => this.handleClick("5-star")}>
+                    5 Star
+                  </Button>
+                  <Button onClick={() => this.handleClick("Snickers")}>
+                    Snickers
+                  </Button>
                 </ButtonGroup>
               </Card.Body>
             </Accordion.Collapse>
@@ -52,4 +52,12 @@ class SideBar extends Component {
     );
   }
 }
-export default SideBar;
+
+const mapStateToProps = state => ({
+  itemClicked: state.itemClicked.clickedItem
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchClickedItem }
+)(SideBar);
