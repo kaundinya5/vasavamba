@@ -1,7 +1,8 @@
 import { FETCH_CLICKED_ITEM } from "../actions/types";
 const initialState = {
-  clickedItem: NaN,
-  itemWeight: NaN
+  itemName: NaN,
+  itemWeight: NaN,
+  itemQuantity: 0
 };
 
 export default function(state = initialState, action) {
@@ -9,7 +10,7 @@ export default function(state = initialState, action) {
     case FETCH_CLICKED_ITEM:
       return {
         ...state,
-        clickedItem: action.payload
+        itemName: action.payload
       };
     default:
       return state;

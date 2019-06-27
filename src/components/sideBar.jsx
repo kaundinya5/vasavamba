@@ -15,7 +15,7 @@ class SideBar extends Component {
   };
   render() {
     return (
-      <div className="grey h-100">
+      <div className={this.props.className + " grey h-100"}>
         <Accordion>
           <Card>
             <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -54,7 +54,10 @@ class SideBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  itemClicked: state.itemClicked.clickedItem
+  item: {
+    selectedItem: state.itemClicked.itemName,
+    quantity: state.itemClicked.itemQuantity
+  }
 });
 
 export default connect(
