@@ -14,7 +14,6 @@ class SideBar extends Component {
     };
   }
   handleClick = item => {
-    console.log(this.state);
     this.setState({
       buttonsClicked: { ...this.state.buttonsClicked, [item]: true }
     });

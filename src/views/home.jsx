@@ -35,8 +35,14 @@ class Home extends React.Component {
     switch (operation) {
       case "add":
         value["quantity"] += 1;
+        break;
       case "sub":
+        if (value["quantity"] == 0) break;
         value["quantity"] -= 1;
+        break;
+      default:
+        console.log("Wrong input");
+        break;
     }
     this.setState({
       quantityChanged: "yes"
@@ -53,7 +59,7 @@ class Home extends React.Component {
             <Button
               className={this.state.isPrinting ? "d-none" : null}
               variant="outline-dark"
-              onClick={() => this.changeQuantity(value, "add")}
+              onClick={() => this.changeQuantity(value, "sub")}
             >
               -
             </Button>
@@ -63,7 +69,7 @@ class Home extends React.Component {
             <Button
               className={this.state.isPrinting ? "d-none" : null}
               variant="outline-dark"
-              onClick={() => this.changeQuantity(value, "sub")}
+              onClick={() => this.changeQuantity(value, "add")}
             >
               +
             </Button>
