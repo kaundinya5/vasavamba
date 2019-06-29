@@ -49,17 +49,35 @@ class Home extends React.Component {
     });
   };
 
+  deleteItem = value => {
+    console.log(this.state.selectedItems.filter(el => el !== value));
+    let selectedItems = [...this.state.selectedItems];
+    this.setState({
+      selectedItems: selectedItems.filter(el => el !== value)
+    });
+    this.setState();
+  };
+
   enterElementsToTable = () => {
     return this.state.selectedItems.map((value, index) => {
       // console.log(value);
       return (
         <tr key={index}>
-          <td key={index}>{value["itemName"]}</td>
+          <td key={index}>
+            {value["itemName"]}
+            <Button
+              className={this.state.isPrinting ? "d-none" : "float-right"}
+              variant="danger"
+              onClick={() => this.deleteItem(value)}
+            >
+              Delete
+            </Button>
+          </td>
           <td className="text-center">
             <Button
               className={this.state.isPrinting ? "d-none" : null}
               variant="outline-dark"
-              onClick={() => this.changeQuantity(value, "sub")}
+              onClick={() => this.deleteItem(value)}
             >
               -
             </Button>
