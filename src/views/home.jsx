@@ -18,7 +18,6 @@ class Home extends React.Component {
     };
   }
   componentDidUpdate(prevProps) {
-    console.log("Here");
     if (prevProps.item != this.props.item) {
       this.setState({
         selectedItems: [...this.state.selectedItems, this.props.item]
@@ -34,10 +33,10 @@ class Home extends React.Component {
 
   changeQuantity = (value, operation) => {
     switch (operation) {
-      case "+":
+      case "add":
         value["quantity"] += 1;
-      case "-":
-        value["quantity"] += 1;
+      case "sub":
+        value["quantity"] -= 1;
     }
     this.setState({
       quantityChanged: "yes"
@@ -54,7 +53,7 @@ class Home extends React.Component {
             <Button
               className={this.state.isPrinting ? "d-none" : null}
               variant="outline-dark"
-              onClick={() => this.changeQuantity(value, "+")}
+              onClick={() => this.changeQuantity(value, "add")}
             >
               -
             </Button>
@@ -64,7 +63,7 @@ class Home extends React.Component {
             <Button
               className={this.state.isPrinting ? "d-none" : null}
               variant="outline-dark"
-              onClick={() => this.changeQuantity(value, "-")}
+              onClick={() => this.changeQuantity(value, "sub")}
             >
               +
             </Button>
@@ -86,10 +85,10 @@ class Home extends React.Component {
   render() {
     return (
       <Row className="h-100">
-        <Col md="2">
-          <SideBar className={this.state.isPrinting ? "d-none" : null} />
+        <Col md="2" className={this.state.isPrinting ? "d-none" : null}>
+          <SideBar />
         </Col>
-        <Col md="10">
+        <Col md={this.state.isPrinting ? "12" : "10"}>
           {this.state.selectedItems && this.state.selectedItems.length > 0 ? (
             <Table striped bordered hover responsive>
               <thead>

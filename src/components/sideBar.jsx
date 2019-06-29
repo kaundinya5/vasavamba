@@ -2,15 +2,22 @@ import React, { Component } from "react";
 import "../styles/sideBar.css";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
 import { fetchClickedItem } from "../actions/fetchClickedItem";
 class SideBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      buttonsClicked: {}
+    };
   }
   handleClick = item => {
+    console.log(this.state);
+    this.setState({
+      buttonsClicked: { ...this.state.buttonsClicked, [item]: true }
+    });
     this.props.fetchClickedItem(item);
   };
   render() {
@@ -22,12 +29,10 @@ class SideBar extends Component {
               Dry Fruits
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <ButtonGroup vertical>
-                  <Button>Cashews</Button>
-                  <Button>Grapes</Button>
-                </ButtonGroup>
-              </Card.Body>
+              <ListGroup>
+                <ListGroup.Item variant="dark">Cashews</ListGroup.Item>
+                <ListGroup.Item variant="dark">Grapes</ListGroup.Item>
+              </ListGroup>
             </Accordion.Collapse>
           </Card>
           <Card>
@@ -35,16 +40,22 @@ class SideBar extends Component {
               Chocolates
             </Accordion.Toggle>
             <Accordion.Collapse eventKey="1">
-              <Card.Body>
-                <ButtonGroup vertical>
-                  <Button onClick={() => this.handleClick("5-star")}>
-                    5 Star
-                  </Button>
-                  <Button onClick={() => this.handleClick("Snickers")}>
-                    Snickers
-                  </Button>
-                </ButtonGroup>
-              </Card.Body>
+              <ListGroup>
+                <ListGroup.Item
+                  disabled={this.state["buttonsClicked"]["5-star"]}
+                  variant="dark"
+                  onClick={() => this.handleClick("5-star")}
+                >
+                  5 Star
+                </ListGroup.Item>
+                <ListGroup.Item
+                  disabled={this.state["buttonsClicked"]["Snickers"]}
+                  variant="dark"
+                  onClick={() => this.handleClick("Snickers")}
+                >
+                  Snickers
+                </ListGroup.Item>
+              </ListGroup>
             </Accordion.Collapse>
           </Card>
         </Accordion>
