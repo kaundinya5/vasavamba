@@ -10,76 +10,86 @@ class SideBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonsClicked: []
+      buttonsClicked: [],
+      storeItems: null
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchStoreItems();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.storeItems !== this.props.storeItems &&
+      this.props.storeItems
+    ) {
+      this.setState({
+        storeItems: this.props.storeItems
+      });
+    }
   }
 
   handleClick = item => {
     this.props.fetchClickedItem(item);
   };
 
+  populateAccordian = (storeItems, value) => {
+    return storeItems[value].map((value, index) => {
+      return (
+        <ListGroup.Item
+          disabled={
+            this.props.selectedItems.filter(e => e.itemName === value.item)
+              .length > 0
+              ? true
+              : false
+          }
+          variant="dark"
+          onClick={() => this.handleClick(value.item)}
+          variant="dark"
+        >
+          {value.item}
+        </ListGroup.Item>
+      );
+    });
+  };
+
+  createAccordian = () => {
+    console.log(this.state.storeItems);
+    if (this.state.storeItems != null) {
+      let storeItems = this.state.storeItems.categories;
+      let categories = Object.keys(this.state.storeItems.categories);
+      return categories.map((value, index) => {
+        return (
+          <React.Fragment>
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey={index}>
+                {value}
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey={index}>
+                <ListGroup>
+                  {this.populateAccordian(storeItems, value)}
+                </ListGroup>
+              </Accordion.Collapse>
+            </Card>
+          </React.Fragment>
+        );
+      });
+    }
+  };
+
   render() {
     return (
       <div className={this.props.className + " grey h-100"}>
-        <Accordion>
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="0">
-              Dry Fruits
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="0">
-              <ListGroup>
-                <ListGroup.Item variant="dark">Cashews</ListGroup.Item>
-                <ListGroup.Item variant="dark">Grapes</ListGroup.Item>
-              </ListGroup>
-            </Accordion.Collapse>
-          </Card>
-          <Card>
-            <Accordion.Toggle as={Card.Header} eventKey="1">
-              Chocolates
-            </Accordion.Toggle>
-            <Accordion.Collapse eventKey="1">
-              <ListGroup>
-                <ListGroup.Item
-                  disabled={
-                    this.props.selectedItems.filter(
-                      e => e.itemName === "5-star"
-                    ).length > 0
-                      ? true
-                      : false
-                  }
-                  variant="dark"
-                  onClick={() => this.handleClick("5-star")}
-                >
-                  5 Star
-                </ListGroup.Item>
-                <ListGroup.Item
-                  disabled={
-                    this.props.selectedItems.filter(
-                      e => e.itemName === "Snickers"
-                    ).length > 0
-                      ? true
-                      : false
-                  }
-                  variant="dark"
-                  onClick={() => this.handleClick("Snickers")}
-                >
-                  Snickers
-                </ListGroup.Item>
-              </ListGroup>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
+        <Accordion>{this.createAccordian()}</Accordion>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  selectedItems: state.items.selectedItems
+  selectedItems: state.items.selectedItems,
+  storeItems: state.items.storeItems
 });
 
 export default connect(
