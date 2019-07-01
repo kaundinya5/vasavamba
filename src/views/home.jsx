@@ -9,6 +9,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
 import { fetchDeletedItem } from "../actions/fetchDeletedItem";
+import { clearAllItems } from "../actions/clearAllItems";
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -107,6 +108,10 @@ class Home extends React.Component {
       isPrinting: null
     });
   };
+
+  clearAllItems = () => {
+    this.props.clearAllItems();
+  };
   render() {
     return (
       <Row className="h-100">
@@ -134,6 +139,13 @@ class Home extends React.Component {
           >
             Print
           </Button>
+          <Button
+            className={this.state.isPrinting ? "d-none" : null}
+            variant="danger"
+            onClick={() => this.clearAllItems()}
+          >
+            Clear all
+          </Button>
         </Col>
       </Row>
     );
@@ -147,5 +159,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { fetchDeletedItem }
+  { fetchDeletedItem, clearAllItems }
 )(Home);
