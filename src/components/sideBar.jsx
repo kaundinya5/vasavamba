@@ -3,9 +3,9 @@ import "../styles/sideBar.css";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
 import { fetchClickedItem } from "../actions/fetchClickedItem";
+import { fetchStoreItems } from "../actions/fetchStoreItems";
 class SideBar extends Component {
   constructor(props) {
     super(props);
@@ -13,21 +13,16 @@ class SideBar extends Component {
       buttonsClicked: []
     };
   }
+
+  componentDidMount() {
+    this.props.fetchStoreItems();
+  }
+
   handleClick = item => {
     this.props.fetchClickedItem(item);
   };
-  componentDidUpdate(prevProps) {
-    if (prevProps.selectedItems != this.props.selectedItems) {
-      // debugger;
-      // this.setState({
-      //   buttonsClicked: {
-      //     ...this.state.buttonsClicked
-      //   }
-      // });
-    }
-  }
+
   render() {
-    console.log(this.state);
     return (
       <div className={this.props.className + " grey h-100"}>
         <Accordion>
@@ -89,5 +84,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchClickedItem }
+  { fetchClickedItem, fetchStoreItems }
 )(SideBar);

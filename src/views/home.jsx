@@ -1,5 +1,4 @@
 import React from "react";
-import ReactToPrint from "react-to-print";
 import "../styles/home.css";
 // import FinalList from "./outputList"
 import SideBar from "../components/sideBar";
@@ -20,7 +19,7 @@ class Home extends React.Component {
     };
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.selectedItems != this.props.selectedItems) {
+    if (prevProps.selectedItems !== this.props.selectedItems) {
       this.setState({
         selectedItems: this.props.selectedItems
       });
@@ -39,7 +38,7 @@ class Home extends React.Component {
         value["itemQuantity"] += 1;
         break;
       case "sub":
-        if (value["itemQuantity"] == 0) break;
+        if (value["itemQuantity"] === 0) break;
         value["itemQuantity"] -= 1;
         break;
       default:

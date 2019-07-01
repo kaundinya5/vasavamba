@@ -1,8 +1,10 @@
 import { FETCH_CLICKED_ITEM } from "../actions/types";
 import { FETCH_DELETED_ITEM } from "../actions/types";
 import { CLEAR_ALL_ITEMS } from "../actions/types";
+import { FETCH_STORE_ITEMS } from "../actions/types";
 const initialState = {
-  selectedItems: []
+  selectedItems: [],
+  storeItems: []
 };
 export default function(state = initialState, action) {
   switch (action.type) {
@@ -24,6 +26,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         selectedItems: []
+      };
+    case FETCH_STORE_ITEMS:
+      return {
+        ...state,
+        storeItems: action.payload
       };
     default:
       return state;
