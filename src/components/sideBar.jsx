@@ -10,16 +10,24 @@ class SideBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonsClicked: {}
+      buttonsClicked: []
     };
   }
   handleClick = item => {
-    this.setState({
-      buttonsClicked: { ...this.state.buttonsClicked, [item]: true }
-    });
     this.props.fetchClickedItem(item);
   };
+  componentDidUpdate(prevProps) {
+    if (prevProps.selectedItems != this.props.selectedItems) {
+      // debugger;
+      // this.setState({
+      //   buttonsClicked: {
+      //     ...this.state.buttonsClicked
+      //   }
+      // });
+    }
+  }
   render() {
+    console.log(this.state);
     return (
       <div className={this.props.className + " grey h-100"}>
         <Accordion>
@@ -41,14 +49,26 @@ class SideBar extends Component {
             <Accordion.Collapse eventKey="1">
               <ListGroup>
                 <ListGroup.Item
-                  disabled={this.state["buttonsClicked"]["5-star"]}
+                  disabled={
+                    this.props.selectedItems.filter(
+                      e => e.itemName === "5-star"
+                    ).length > 0
+                      ? true
+                      : false
+                  }
                   variant="dark"
                   onClick={() => this.handleClick("5-star")}
                 >
                   5 Star
                 </ListGroup.Item>
                 <ListGroup.Item
-                  disabled={this.state["buttonsClicked"]["Snickers"]}
+                  disabled={
+                    this.props.selectedItems.filter(
+                      e => e.itemName === "Snickers"
+                    ).length > 0
+                      ? true
+                      : false
+                  }
                   variant="dark"
                   onClick={() => this.handleClick("Snickers")}
                 >
@@ -64,10 +84,7 @@ class SideBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  item: {
-    selectedItem: state.itemClicked.itemName,
-    quantity: state.itemClicked.itemQuantity
-  }
+  selectedItems: state.items.selectedItems
 });
 
 export default connect(

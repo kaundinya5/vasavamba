@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
+import { fetchDeletedItem } from "../actions/fetchDeletedItem";
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -18,9 +19,9 @@ class Home extends React.Component {
     };
   }
   componentDidUpdate(prevProps) {
-    if (prevProps.item != this.props.item) {
+    if (prevProps.selectedItems != this.props.selectedItems) {
       this.setState({
-        selectedItems: [...this.state.selectedItems, this.props.item]
+        selectedItems: this.props.selectedItems
       });
     }
     if (this.state.isPrinting != null) {
@@ -34,11 +35,11 @@ class Home extends React.Component {
   changeQuantity = (value, operation) => {
     switch (operation) {
       case "add":
-        value["quantity"] += 1;
+        value["itemQuantity"] += 1;
         break;
       case "sub":
-        if (value["quantity"] == 0) break;
-        value["quantity"] -= 1;
+        if (value["itemQuantity"] == 0) break;
+        value["itemQuantity"] -= 1;
         break;
       default:
         console.log("Wrong input");
@@ -50,17 +51,17 @@ class Home extends React.Component {
   };
 
   deleteItem = value => {
-    console.log(this.state.selectedItems.filter(el => el !== value));
     let selectedItems = [...this.state.selectedItems];
-    this.setState({
-      selectedItems: selectedItems.filter(el => el !== value)
-    });
-    this.setState();
+    this.setState(
+      {
+        selectedItems: selectedItems.filter(el => el !== value)
+      },
+      this.props.fetchDeletedItem(value)
+    );
   };
 
   enterElementsToTable = () => {
     return this.state.selectedItems.map((value, index) => {
-      // console.log(value);
       return (
         <tr key={index}>
           <td key={index}>
@@ -77,12 +78,12 @@ class Home extends React.Component {
             <Button
               className={this.state.isPrinting ? "d-none" : null}
               variant="outline-dark"
-              onClick={() => this.deleteItem(value)}
+              onClick={() => this.changeQuantity(value, "sub")}
             >
               -
             </Button>
             &nbsp;
-            {value["quantity"]}
+            {value["itemQuantity"]}
             &nbsp;
             <Button
               className={this.state.isPrinting ? "d-none" : null}
@@ -139,9 +140,12 @@ class Home extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  item: {
-    itemName: state.itemClicked.itemName,
-    quantity: state.itemClicked.itemQuantity
-  }
+  selectedItems: state.items.selectedItems
+  // deletedItems: {
+  //   name: state.deletedItem.itemName
+  // }
 });
-export default connect(mapStateToProps)(Home);
+export default connect(
+  mapStateToProps,
+  { fetchDeletedItem }
+)(Home);

@@ -11,7 +11,7 @@ const composeEnhancer =
   compose;
 
 const rootReducer = combineReducers({
-  itemClicked: itemsReducer
+  items: itemsReducer
 });
 
 const store = createStore(
