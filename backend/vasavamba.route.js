@@ -5,19 +5,38 @@ const vasavambaRoutes = express.Router();
 let Vasavamba = require("./vasavamba.model");
 
 // Defined store route
+
+function readFileData(jsonObj) {
+  return new Promise((resolve, reject) => {
+    let categories = {};
+    jsonObj.forEach(function(item) {
+      const lowerObj = Object.fromEntries(
+        Object.entries(item).map(([k, v]) => [k.toLowerCase(), v])
+      );
+      var itemWithoutCategory = Object.assign({}, lowerObj);
+      delete itemWithoutCategory["category"];
+      if (lowerObj.category in categories) {
+        categories[lowerObj.category].push(itemWithoutCategory);
+      } else {
+        categories[lowerObj.category] = [];
+      }
+      resolve(categories);
+    });
+  });
+}
+async function readFiles(jsonObj) {
+  await readFileData(jsonObj).then(categories => {
+    let vasavamba = new Vasavamba({ categories: categories });
+    vasavamba.save();
+  });
+}
 vasavambaRoutes.route("/add_csv").post(function(req, res) {
   const csv = require("csvtojson");
   const csvFilePath = "data.csv";
   csv()
     .fromFile(csvFilePath)
     .then(jsonObj => {
-      jsonObj.forEach(function(item) {
-        const lowerObj = Object.fromEntries(
-          Object.entries(item).map(([k, v]) => [k.toLowerCase(), v])
-        );
-        let vasavamba = new Vasavamba(lowerObj);
-        vasavamba.save();
-      });
+      readFiles(jsonObj);
     });
   res.json("Successfully added entries");
 });
@@ -28,7 +47,7 @@ vasavambaRoutes.route("/get_all").get(function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.json(items);
+      res.json(items[0]);
     }
   });
 });
