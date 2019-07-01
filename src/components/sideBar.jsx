@@ -44,9 +44,8 @@ class SideBar extends Component {
               ? true
               : false
           }
-          variant="dark"
+          // variant="dark"
           onClick={() => this.handleClick(value.item)}
-          variant="dark"
         >
           {value.item}
         </ListGroup.Item>

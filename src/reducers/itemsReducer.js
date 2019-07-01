@@ -13,19 +13,22 @@ export default function(state = initialState, action) {
         selectedItems: [
           ...state.selectedItems,
           { itemName: action.payload, itemWeight: 0, itemQuantity: 0 }
-        ]
+        ],
+        storeItems: state.storeItems
       };
     case FETCH_DELETED_ITEM:
       return {
         ...state,
         selectedItems: state.selectedItems.filter(
           element => element !== action.payload
-        )
+        ),
+        storeItems: state.storeItems
       };
     case CLEAR_ALL_ITEMS:
       return {
         ...state,
-        selectedItems: []
+        selectedItems: [],
+        storeItems: state.storeItems
       };
     case FETCH_STORE_ITEMS:
       return {

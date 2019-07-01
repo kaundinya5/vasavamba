@@ -9,6 +9,7 @@ import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
 import { fetchDeletedItem } from "../actions/fetchDeletedItem";
 import { clearAllItems } from "../actions/clearAllItems";
+import { fetchStoreItems } from "../actions/fetchStoreItems";
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -74,6 +75,8 @@ class Home extends React.Component {
               Delete
             </Button>
           </td>
+          <td>123</td>
+          <td>123</td>
           <td className="text-center">
             <Button
               className={this.state.isPrinting ? "d-none" : null}
@@ -122,8 +125,10 @@ class Home extends React.Component {
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
-                  <th className="w-50">Item</th>
-                  <th className="w-50">Quantity</th>
+                  <th className="w-25">Item</th>
+                  <th className="w-25">Weight</th>
+                  <th className="w-25">Units</th>
+                  <th className="w-25">Quantity</th>
                 </tr>
               </thead>
               <tbody>{this.enterElementsToTable()}</tbody>
@@ -151,12 +156,10 @@ class Home extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  selectedItems: state.items.selectedItems
-  // deletedItems: {
-  //   name: state.deletedItem.itemName
-  // }
+  selectedItems: state.items.selectedItems,
+  storeItems: state.items.storeItems
 });
 export default connect(
   mapStateToProps,
-  { fetchDeletedItem, clearAllItems }
+  { fetchDeletedItem, clearAllItems, fetchStoreItems }
 )(Home);

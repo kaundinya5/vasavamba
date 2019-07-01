@@ -1,3 +1,8 @@
 .text-center {
   text-align: center;
 }
+.list-group-item.disabled,
+.list-group-item:disabled {
+  color: black !important;
+  background-color: grey;
+}
