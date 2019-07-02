@@ -23,7 +23,8 @@ class Home extends React.Component {
       selectedItems: [],
       quantityChanged: "no",
       isPrinting: null,
-      weightsTitle: {}
+      weightsTitle: {},
+      unitsTitle: {}
     };
   }
   componentDidUpdate(prevProps) {
@@ -68,45 +69,67 @@ class Home extends React.Component {
     );
   };
 
-  changeWeightTitle = (item, weight, custom = null) => {
-    if (custom !== null) {
-      let numbers = /^[0-9]*$/;
-      if (numbers.test(weight) === false) {
-        this.setState({
-          weightsTitle: {
-            ...this.state.weightsTitle,
-            [item]: false
-          }
-        });
+  changeWeightOrUnitTitle = (item, weight, itemType, custom = null) => {
+    if (itemType == "weight") {
+      if (custom !== null) {
+        let numbers = /^[0-9]*$/;
+        if (numbers.test(weight) === false) {
+          this.setState({
+            weightsTitle: {
+              ...this.state.weightsTitle,
+              [item]: false
+            }
+          });
+        } else {
+          this.setState({
+            weightsTitle: {
+              ...this.state.weightsTitle,
+              [item]: weight
+            }
+          });
+        }
       } else {
         this.setState({
           weightsTitle: {
             ...this.state.weightsTitle,
-            [item]: weight
+            [item["itemName"]]: weight
           }
         });
       }
     } else {
       this.setState({
-        weightsTitle: {
-          ...this.state.weightsTitle,
+        unitsTitle: {
+          ...this.state.unitsTitle,
           [item["itemName"]]: weight
         }
       });
     }
   };
 
-  addWeights = item => {
-    return item["itemWeights"].map((weight, index) => {
-      return (
-        <Dropdown.Item
-          as="button"
-          onClick={() => this.changeWeightTitle(item, weight)}
-        >
-          {weight}
-        </Dropdown.Item>
-      );
-    });
+  addWeightsAndUnits = (item, itemType) => {
+    if (itemType == "weights") {
+      return item["itemWeights"].map((weight, index) => {
+        return (
+          <Dropdown.Item
+            as="button"
+            onClick={() => this.changeWeightOrUnitTitle(item, weight, "weight")}
+          >
+            {weight}
+          </Dropdown.Item>
+        );
+      });
+    } else {
+      return item["itemUnits"].map((unit, index) => {
+        return (
+          <Dropdown.Item
+            as="button"
+            onClick={() => this.changeWeightOrUnitTitle(item, unit, "unit")}
+          >
+            {unit}
+          </Dropdown.Item>
+        );
+      });
+    }
   };
 
   customWeight = e => {
@@ -154,7 +177,7 @@ class Home extends React.Component {
                   </Tooltip>
                 )}
               </Overlay>
-              {this.addWeights(value)}
+              {this.addWeightsAndUnits(value, "weights")}
               <InputGroup size="sm" className="mb-3">
                 <FormControl
                   placeholder="Enter Weight"
@@ -167,7 +190,19 @@ class Home extends React.Component {
               </InputGroup>
             </DropdownButton>
           </td>
-          <td>123</td>
+          <td>
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={
+                this.state.unitsTitle[value["itemName"]] &&
+                this.state.unitsTitle[value["itemName"]] !== false
+                  ? this.state.unitsTitle[value["itemName"]]
+                  : "Units"
+              }
+            >
+              {this.addWeightsAndUnits(value, "units")}
+            </DropdownButton>
+          </td>
           <td className="text-center">
             <Button
               className={this.state.isPrinting ? "d-none" : null}
