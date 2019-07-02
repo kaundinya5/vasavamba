@@ -134,7 +134,7 @@ class Home extends React.Component {
 
   customWeight = e => {
     if (e.charCode == 13) {
-      this.changeWeightTitle(e.target.id, e.target.value, true);
+      this.changeWeightOrUnitTitle(e.target.id, e.target.value, "weight", true);
     }
   };
 
