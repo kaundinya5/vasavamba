@@ -10,6 +10,8 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
+import Overlay from "react-bootstrap/Overlay";
+import Tooltip from "react-bootstrap/Tooltip";
 import { connect } from "react-redux";
 import { fetchDeletedItem } from "../actions/fetchDeletedItem";
 import { clearAllItems } from "../actions/clearAllItems";
@@ -68,12 +70,22 @@ class Home extends React.Component {
 
   changeWeightTitle = (item, weight, custom = null) => {
     if (custom !== null) {
-      this.setState({
-        weightsTitle: {
-          ...this.state.weightsTitle,
-          [item]: weight
-        }
-      });
+      let numbers = /^[0-9]*$/;
+      if (numbers.test(weight) === false) {
+        this.setState({
+          weightsTitle: {
+            ...this.state.weightsTitle,
+            [item]: false
+          }
+        });
+      } else {
+        this.setState({
+          weightsTitle: {
+            ...this.state.weightsTitle,
+            [item]: weight
+          }
+        });
+      }
     } else {
       this.setState({
         weightsTitle: {
@@ -121,15 +133,32 @@ class Home extends React.Component {
             <DropdownButton
               id="dropdown-basic-button"
               title={
-                this.state.weightsTitle[value["itemName"]]
+                this.state.weightsTitle[value["itemName"]] &&
+                this.state.weightsTitle[value["itemName"]] !== false
                   ? this.state.weightsTitle[value["itemName"]]
                   : "Weights"
               }
             >
+              <Overlay
+                target={this.refs[value["itemName"]]}
+                show={
+                  this.state.weightsTitle[value["itemName"]] == false
+                    ? true
+                    : false
+                }
+                placement="bottom"
+              >
+                {props => (
+                  <Tooltip id={value["itemName"] + "_overlay"} {...props}>
+                    Please enter only numbers
+                  </Tooltip>
+                )}
+              </Overlay>
               {this.addWeights(value)}
               <InputGroup size="sm" className="mb-3">
                 <FormControl
                   placeholder="Enter Weight"
+                  ref={value["itemName"]}
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                   id={value["itemName"]}

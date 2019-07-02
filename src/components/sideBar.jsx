@@ -31,7 +31,6 @@ class SideBar extends Component {
   }
 
   handleClick = value => {
-    console.log(value);
     this.props.fetchClickedItem(value);
   };
 
