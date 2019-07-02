@@ -30,8 +30,9 @@ class SideBar extends Component {
     }
   }
 
-  handleClick = item => {
-    this.props.fetchClickedItem(item);
+  handleClick = value => {
+    console.log(value);
+    this.props.fetchClickedItem(value);
   };
 
   populateAccordian = (storeItems, value) => {
@@ -45,7 +46,7 @@ class SideBar extends Component {
               : false
           }
           // variant="dark"
-          onClick={() => this.handleClick(value.item)}
+          onClick={() => this.handleClick(value)}
         >
           {value.item}
         </ListGroup.Item>
@@ -54,7 +55,6 @@ class SideBar extends Component {
   };
 
   createAccordian = () => {
-    console.log(this.state.storeItems);
     if (this.state.storeItems != null) {
       let storeItems = this.state.storeItems.categories;
       let categories = Object.keys(this.state.storeItems.categories);

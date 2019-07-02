@@ -6,3 +6,6 @@
   color: black !important;
   background-color: grey;
 }
+.table-responsive {
+  overflow-x: visible;
+}

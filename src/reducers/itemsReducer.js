@@ -12,7 +12,12 @@ export default function(state = initialState, action) {
       return {
         selectedItems: [
           ...state.selectedItems,
-          { itemName: action.payload, itemWeight: 0, itemQuantity: 0 }
+          {
+            itemName: action.payload.item,
+            itemWeights: action.payload.weight.split(","),
+            itemQuantity: 0,
+            itemUnits: action.payload.units.split(",")
+          }
         ],
         storeItems: state.storeItems
       };

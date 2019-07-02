@@ -6,6 +6,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import InputGroup from "react-bootstrap/InputGroup";
+import FormControl from "react-bootstrap/FormControl";
 import { connect } from "react-redux";
 import { fetchDeletedItem } from "../actions/fetchDeletedItem";
 import { clearAllItems } from "../actions/clearAllItems";
@@ -16,7 +20,8 @@ class Home extends React.Component {
     this.state = {
       selectedItems: [],
       quantityChanged: "no",
-      isPrinting: null
+      isPrinting: null,
+      weightsTitle: {}
     };
   }
   componentDidUpdate(prevProps) {
@@ -61,6 +66,43 @@ class Home extends React.Component {
     );
   };
 
+  changeWeightTitle = (item, weight, custom = null) => {
+    if (custom !== null) {
+      this.setState({
+        weightsTitle: {
+          ...this.state.weightsTitle,
+          [item]: weight
+        }
+      });
+    } else {
+      this.setState({
+        weightsTitle: {
+          ...this.state.weightsTitle,
+          [item["itemName"]]: weight
+        }
+      });
+    }
+  };
+
+  addWeights = item => {
+    return item["itemWeights"].map((weight, index) => {
+      return (
+        <Dropdown.Item
+          as="button"
+          onClick={() => this.changeWeightTitle(item, weight)}
+        >
+          {weight}
+        </Dropdown.Item>
+      );
+    });
+  };
+
+  customWeight = e => {
+    if (e.charCode == 13) {
+      this.changeWeightTitle(e.target.id, e.target.value, true);
+    }
+  };
+
   enterElementsToTable = () => {
     return this.state.selectedItems.map((value, index) => {
       return (
@@ -75,7 +117,27 @@ class Home extends React.Component {
               Delete
             </Button>
           </td>
-          <td>123</td>
+          <td>
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={
+                this.state.weightsTitle[value["itemName"]]
+                  ? this.state.weightsTitle[value["itemName"]]
+                  : "Weights"
+              }
+            >
+              {this.addWeights(value)}
+              <InputGroup size="sm" className="mb-3">
+                <FormControl
+                  placeholder="Enter Weight"
+                  aria-label="Username"
+                  aria-describedby="basic-addon1"
+                  id={value["itemName"]}
+                  onKeyPress={this.customWeight}
+                />
+              </InputGroup>
+            </DropdownButton>
+          </td>
           <td>123</td>
           <td className="text-center">
             <Button
