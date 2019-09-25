@@ -61,9 +61,12 @@ class Home extends React.Component {
 
   deleteItem = value => {
     let selectedItems = [...this.state.selectedItems];
+    let weightsTitle = this.state.weightsTitle;
+    delete weightsTitle[value["itemName"]];
     this.setState(
       {
-        selectedItems: selectedItems.filter(el => el !== value)
+        selectedItems: selectedItems.filter(el => el !== value),
+        weightsTitle: weightsTitle
       },
       this.props.fetchDeletedItem(value)
     );
@@ -96,41 +99,41 @@ class Home extends React.Component {
           }
         });
       }
-    } else {
-      this.setState({
-        unitsTitle: {
-          ...this.state.unitsTitle,
-          [item["itemName"]]: weight
-        }
-      });
+      // } else {
+      //   this.setState({
+      //     unitsTitle: {
+      //       ...this.state.unitsTitle,
+      //       [item["itemName"]]: weight
+      //     }
+      //   });
     }
   };
 
-  addWeightsAndUnits = (item, itemType) => {
-    if (itemType == "weights") {
-      return item["itemWeights"].map((weight, index) => {
-        return (
-          <Dropdown.Item
-            as="button"
-            onClick={() => this.changeWeightOrUnitTitle(item, weight, "weight")}
-          >
-            {weight}
-          </Dropdown.Item>
-        );
-      });
-    } else {
-      return item["itemUnits"].map((unit, index) => {
-        return (
-          <Dropdown.Item
-            as="button"
-            onClick={() => this.changeWeightOrUnitTitle(item, unit, "unit")}
-          >
-            {unit}
-          </Dropdown.Item>
-        );
-      });
-    }
-  };
+  // addWeightsAndUnits = (item, itemType) => {
+  //   if (itemType == "weights") {
+  //     return item["itemWeights"].map((weight, index) => {
+  //       return (
+  //         <Dropdown.Item
+  //           as="button"
+  //           onClick={() => this.changeWeightOrUnitTitle(item, weight, "weight")}
+  //         >
+  //           {weight}
+  //         </Dropdown.Item>
+  //       );
+  //     });
+  //   } else {
+  //     return item["itemUnits"].map((unit, index) => {
+  //       return (
+  //         <Dropdown.Item
+  //           as="button"
+  //           onClick={() => this.changeWeightOrUnitTitle(item, unit, "unit")}
+  //         >
+  //           {unit}
+  //         </Dropdown.Item>
+  //       );
+  //     });
+  //   }
+  // };
 
   customWeight = e => {
     if (e.charCode == 13) {
@@ -153,7 +156,21 @@ class Home extends React.Component {
             </Button>
           </td>
           <td>
-            {value["itemWeights"][0]}
+            {value["itemUnits"][0] == "kg" && !value["itemWeights"][0] ? (
+              <InputGroup size="sm" className="mb-3">
+                <FormControl
+                  placeholder="Enter Weight"
+                  ref={value["itemName"]}
+                  aria-label="ItemWeight"
+                  aria-describedby="basic-addon1"
+                  id={value["itemName"]}
+                  onKeyPress={this.customWeight}
+                  defaultValue={1}
+                />
+              </InputGroup>
+            ) : (
+              value["itemWeights"][0]
+            )}
             {/* <DropdownButton
               id="dropdown-basic-button"
               title={
@@ -224,7 +241,15 @@ class Home extends React.Component {
               +
             </Button>
           </td>
-          <td>₹{value["itemPrice"] * value["itemQuantity"]}</td>
+          <td>
+            ₹
+            {value["itemUnits"][0] == "kg" &&
+            this.state.weightsTitle[value["itemName"]]
+              ? value["itemPrice"] *
+                value["itemQuantity"] *
+                this.state.weightsTitle[value["itemName"]]
+              : value["itemPrice"] * value["itemQuantity"]}
+          </td>
         </tr>
       );
     });
