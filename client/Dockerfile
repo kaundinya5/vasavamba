@@ -5,6 +5,7 @@ WORKDIR /client
 # copy package.json into the container at /client
 COPY package*.json /client/
 # install dependencies
+RUN npm install -g npm@latest
 RUN npm install
 # Copy the current directory contents into the container at /client
 COPY . /client/

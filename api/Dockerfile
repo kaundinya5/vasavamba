@@ -5,10 +5,12 @@ WORKDIR /api
 # copy package.json into the container at /api
 COPY package*.json /api/
 # install dependencies
+RUN npm install -g npm@latest
 RUN npm install
+RUN npm install -g nodemon
 # Copy the current directory contents into the container at /api
 COPY . /api/
 # Make port 80 available to the world outside this container
 EXPOSE 4000
 # Run the app when the container launches
-CMD ["npm", "start"]
+CMD CMD [ "nodemon", "server"]

@@ -10,9 +10,17 @@ function readFileData(jsonObj) {
   return new Promise((resolve, reject) => {
     let categories = {};
     jsonObj.forEach(function(item) {
-      const lowerObj = Object.fromEntries(
-        Object.entries(item).map(([k, v]) => [k.toLowerCase(), v])
-      );
+      var key,
+        keys = Object.keys(item);
+      var n = keys.length;
+      var lowerObj = {};
+      while (n--) {
+        key = keys[n];
+        lowerObj[key.toLowerCase()] = item[key];
+      }
+      // const lowerObj = Object.fromEntries(
+      //   Object.entries(item).map(([k, v]) => [k.toLowerCase(), v])
+      // );
       var itemWithoutCategory = Object.assign({}, lowerObj);
       delete itemWithoutCategory["category"];
       if (lowerObj.category in categories) {
