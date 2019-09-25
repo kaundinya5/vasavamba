@@ -18,13 +18,24 @@ function readFileData(jsonObj) {
         key = keys[n];
         lowerObj[key.toLowerCase()] = item[key];
       }
-      // const lowerObj = Object.fromEntries(
-      //   Object.entries(item).map(([k, v]) => [k.toLowerCase(), v])
-      // );
-      var itemWithoutCategory = Object.assign({}, lowerObj);
-      delete itemWithoutCategory["category"];
+      var itemsWithoutCategoryHeading = Object.assign({}, lowerObj);
+      delete itemsWithoutCategoryHeading["category"];
       if (lowerObj.category in categories) {
-        categories[lowerObj.category].push(itemWithoutCategory);
+        if (!itemsWithoutCategoryHeading["weight"]) {
+          itemsWithoutCategoryHeading["item"] =
+            itemsWithoutCategoryHeading["item"] +
+            "(" +
+            itemsWithoutCategoryHeading["units"] +
+            ")";
+        } else {
+          itemsWithoutCategoryHeading["item"] =
+            itemsWithoutCategoryHeading["item"] +
+            "(" +
+            String(itemsWithoutCategoryHeading["weight"]) +
+            itemsWithoutCategoryHeading["units"] +
+            ")";
+        }
+        categories[lowerObj.category].push(itemsWithoutCategoryHeading);
       } else {
         categories[lowerObj.category] = [];
       }

@@ -222,6 +222,7 @@ class Home extends React.Component {
               +
             </Button>
           </td>
+          <td>₹{value["itemPrice"]}</td>
         </tr>
       );
     });
@@ -251,10 +252,11 @@ class Home extends React.Component {
             <Table striped bordered hover responsive>
               <thead>
                 <tr>
-                  <th className="w-25">Item</th>
-                  <th className="w-25">Weight</th>
-                  <th className="w-25">Units</th>
-                  <th className="w-25">Quantity</th>
+                  <th className="w-20">Item</th>
+                  <th className="w-20">Weight</th>
+                  <th className="w-20">Units</th>
+                  <th className="w-20">Quantity</th>
+                  <th className="w-20">Price</th>
                 </tr>
               </thead>
               <tbody>{this.enterElementsToTable()}</tbody>

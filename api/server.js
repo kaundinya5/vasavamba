@@ -8,14 +8,24 @@ const config = require("./DB.js");
 const vasavambaRoute = require("./vasavamba.route");
 
 mongoose.Promise = global.Promise;
-mongoose.connect(config.DB, { useNewUrlParser: true }).then(
-  () => {
-    console.log("Database is connected");
-  },
-  err => {
-    console.log("Can not connect to the database" + err);
-  }
-);
+var connectWithRetry = function() {
+  return mongoose
+    .connect(config.DB, {
+      useNewUrlParser: true,
+      reconnectTries: 10,
+      autoReconnect: true
+    })
+    .then(
+      () => {
+        console.log("Database is connected");
+      },
+      err => {
+        console.log("Can not connect to the database" + err);
+        setTimeout(connectWithRetry, 10000);
+      }
+    );
+};
+connectWithRetry();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));

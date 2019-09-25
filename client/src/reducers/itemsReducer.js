@@ -16,7 +16,8 @@ export default function(state = initialState, action) {
             itemName: action.payload.item,
             itemWeights: action.payload.weight.split(","),
             itemQuantity: 0,
-            itemUnits: action.payload.units.split(",")
+            itemUnits: action.payload.units.split(","),
+            itemPrice: action.payload.price
           }
         ],
         storeItems: state.storeItems
