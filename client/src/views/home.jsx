@@ -153,7 +153,8 @@ class Home extends React.Component {
             </Button>
           </td>
           <td>
-            <DropdownButton
+            {value["itemWeights"][0]}
+            {/* <DropdownButton
               id="dropdown-basic-button"
               title={
                 this.state.weightsTitle[value["itemName"]] &&
@@ -188,10 +189,11 @@ class Home extends React.Component {
                   onKeyPress={this.customWeight}
                 />
               </InputGroup>
-            </DropdownButton>
+            </DropdownButton> */}
           </td>
           <td>
-            <DropdownButton
+            {value["itemUnits"][0]}
+            {/* <DropdownButton
               id="dropdown-basic-button"
               title={
                 this.state.unitsTitle[value["itemName"]] &&
@@ -201,7 +203,7 @@ class Home extends React.Component {
               }
             >
               {this.addWeightsAndUnits(value, "units")}
-            </DropdownButton>
+            </DropdownButton> */}
           </td>
           <td className="text-center">
             <Button
@@ -222,7 +224,7 @@ class Home extends React.Component {
               +
             </Button>
           </td>
-          <td>₹{value["itemPrice"]}</td>
+          <td>₹{value["itemPrice"] * value["itemQuantity"]}</td>
         </tr>
       );
     });
