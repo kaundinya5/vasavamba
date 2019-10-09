@@ -3,6 +3,7 @@ import "../styles/sideBar.css";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
+import Dropdown from "react-bootstrap/Dropdown";
 import { connect } from "react-redux";
 import { fetchClickedItem } from "../actions/fetchClickedItem";
 import { fetchStoreItems } from "../actions/fetchStoreItems";
@@ -34,23 +35,49 @@ class SideBar extends Component {
     this.props.fetchClickedItem(value);
   };
 
-  populateAccordian = (storeItems, value) => {
-    return storeItems[value].map((value, index) => {
+  populateSubCategory = (key, subCategoryObject) => {
+    return subCategoryObject[key].map((value, _) => {
       return (
-        <ListGroup.Item
+        <Dropdown.Item
           disabled={
             this.props.selectedItems.filter(e => e.itemName === value.item)
               .length > 0
               ? true
               : false
           }
-          // variant="dark"
           onClick={() => this.handleClick(value)}
         >
           {value.item}
-        </ListGroup.Item>
+        </Dropdown.Item>
       );
     });
+  };
+
+  populateAccordian = (storeItems, value) => {
+    var subCategoryObject = {};
+    storeItems[value].map((value, index) => {
+      var subCategory = value["item"].split("(")[0];
+      if (subCategoryObject.hasOwnProperty(subCategory) === false) {
+        subCategoryObject[subCategory] = [];
+      }
+      subCategoryObject[subCategory].push(value);
+    });
+    return Object.keys(subCategoryObject).map(key => (
+      <ListGroup.Item
+      // variant="dark"
+      >
+        <Dropdown>
+          <Dropdown.Toggle variant="success" id="dropdown-basic">
+            {key}
+            <Dropdown.Menu
+            // variant="dark"
+            >
+              {this.populateSubCategory(key, subCategoryObject)}
+            </Dropdown.Menu>
+          </Dropdown.Toggle>
+        </Dropdown>
+      </ListGroup.Item>
+    ));
   };
 
   createAccordian = () => {

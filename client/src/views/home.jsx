@@ -6,12 +6,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import Overlay from "react-bootstrap/Overlay";
-import Tooltip from "react-bootstrap/Tooltip";
 import { connect } from "react-redux";
 import { fetchDeletedItem } from "../actions/fetchDeletedItem";
 import { clearAllItems } from "../actions/clearAllItems";
@@ -73,7 +69,7 @@ class Home extends React.Component {
   };
 
   changeWeightOrUnitTitle = (item, weight, itemType, custom = null) => {
-    if (itemType == "weight") {
+    if (itemType === "weight") {
       if (custom !== null) {
         let numbers = /^[0-9]*$/;
         if (numbers.test(weight) === false) {
@@ -136,7 +132,7 @@ class Home extends React.Component {
   // };
 
   customWeight = e => {
-    if (e.charCode == 13) {
+    if (e.charCode === 13) {
       this.changeWeightOrUnitTitle(e.target.id, e.target.value, "weight", true);
     }
   };
@@ -156,7 +152,7 @@ class Home extends React.Component {
             </Button>
           </td>
           <td>
-            {value["itemUnits"][0] == "kg" && !value["itemWeights"][0] ? (
+            {value["itemUnits"][0] === "kg" && !value["itemWeights"][0] ? (
               <InputGroup size="sm" className="mb-3">
                 <FormControl
                   placeholder="Enter Weight"
@@ -243,7 +239,7 @@ class Home extends React.Component {
           </td>
           <td>
             ₹
-            {value["itemUnits"][0] == "kg" &&
+            {value["itemUnits"][0] === "kg" &&
             this.state.weightsTitle[value["itemName"]]
               ? value["itemPrice"] *
                 value["itemQuantity"] *
