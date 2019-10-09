@@ -71,7 +71,7 @@ class Home extends React.Component {
   changeWeightOrUnitTitle = (item, weight, itemType, custom = null) => {
     if (itemType === "weight") {
       if (custom !== null) {
-        let numbers = /^[0-9]*$/;
+        let numbers = /^\d+(\.\d{1,2})?$/;
         if (numbers.test(weight) === false) {
           this.setState({
             weightsTitle: {

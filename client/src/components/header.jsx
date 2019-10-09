@@ -23,11 +23,6 @@ class Header extends Component {
                 Home
               </NavLink>
             </Nav.Item>
-            <Nav.Item>
-              <NavLink to="/addItems" className="nav-link">
-                Add Items
-              </NavLink>
-            </Nav.Item>
           </Nav>
         </div>
       </React.Fragment>
